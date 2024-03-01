@@ -39,16 +39,17 @@ public class LanguageModel {
     // Computes and sets the probabilities (p and cp fields) of all the
 	// characters in the given list. */
 	public void calculateProbabilities(List probs) {	
-        int number_of_cp = 0;			
+        int total_num_of_chars = 0;			
 		ListIterator li = probs.listIterator(0);
         while(li.hasNext()) {
-            number_of_cp += li.current.cp.count;
+            total_num_of_chars += li.current.cp.count;
             li.next();
         }
         double cp = 0.0;
+        CharData curr;
         for(int i = 0; i < probs.getSize(); i++) {
-            CharData curr = probs.get(i);
-            curr.p = curr.count / (double)number_of_cp;
+            curr = probs.get(i);
+            curr.p = curr.count / (double) total_num_of_chars;
             curr.cp = cp + curr.p;
             cp += curr.p;
         }
@@ -56,7 +57,15 @@ public class LanguageModel {
 
     // Returns a random character from the given probabilities list.
 	public char getRandomChar(List probs) {
-        return 139;
+        double r = Math.random();
+        CharData curr = probs.getFirst();
+        for(int i = 0; i < probs.getSize(); i++) {
+            curr = probs.get(i);
+            if(r > curr.cp) {
+                break;
+            }
+        }
+        return curr.chr;
 	}
 
     /**
@@ -79,13 +88,4 @@ public class LanguageModel {
 		}
 		return str.toString();
 	}
-
-    public static void main(String[] args) {
-    //     List MyList = new List();
-    //     String n = "committee_";
-    //     for(int i = 0; i < n.length(); i++) {
-    //         MyList.update(n.charAt(i));
-    //     }
-    // }
-    }
 }
