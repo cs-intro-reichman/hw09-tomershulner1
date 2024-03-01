@@ -42,13 +42,13 @@ public class LanguageModel {
         int number_of_cp = 0;			
 		ListIterator li = probs.listIterator(0);
         while(li.hasNext()) {
-            number_of_cp++;
+            number_of_cp += li.current.cp.count;
             li.next();
         }
         double cp = 0.0;
         for(int i = 0; i < probs.getSize(); i++) {
             CharData curr = probs.get(i);
-            curr.p = curr.count / number_of_cp;
+            curr.p = curr.count / (double)number_of_cp;
             curr.cp = cp + curr.p;
             cp += curr.p;
         }

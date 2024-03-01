@@ -2,9 +2,23 @@
     "configurations": [
         {
             "type": "java",
-            "name": "List",
+            "name": "LanguageModel",
             "request": "launch",
-            "mainClass": "List",
+            "mainClass": "LanguageModel",
+            "projectName": "hw09-tomershulner1_5422a62"
+        },
+        {
+            "type": "java",
+            "name": "LanguageModelTester",
+            "request": "launch",
+            "mainClass": "LanguageModelTester",
+            "projectName": "hw09-tomershulner1_5422a62"
+        },
+        {
+            "type": "java",
+            "name": "ListTester",
+            "request": "launch",
+            "mainClass": "ListTester",
             "projectName": "hw09-tomershulner1_5422a62"
         },
         {
@@ -17,8 +31,10 @@
             "type": "java",
             "name": "Lunch App",
             "request": "launch",
-            "mainClass": "MyListTester",
-            "args": []
+            "mainClass": "ListTester",
+            "args": [
+                "toString"
+            ]
         }
     ]
 }
