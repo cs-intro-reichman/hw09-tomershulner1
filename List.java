@@ -37,13 +37,13 @@ public class List {
     
     /** GIVE Textual representation of this list. */
     public String toString() {
-        String res = "";
+        StringBuilder res = new StringBuilder("");
         Node curr = this.first;
         while(curr != null) {
-            res += curr.cp.toString();
+            res.append(curr.cp.toString() + "\n");
             curr = curr.next;
         }
-        return res;
+        return res.toString();
     }
 
     /** Returns the index of the first CharData object in this list
@@ -70,6 +70,7 @@ public class List {
                 curr.cp.count++;
                 return;
             }
+            curr = curr.next;
         }
         addFirst(chr);
     }
@@ -100,7 +101,7 @@ public class List {
             throw new IndexOutOfBoundsException();
         }
         Node res = this.first;
-        for(int i = 1; i < index; i++) {
+        for(int i = 0; i < index; i++) {
             res = res.next;
         }
         return res.cp;
@@ -133,3 +134,4 @@ public class List {
 	    return new ListIterator(current);
     }
 }
+
