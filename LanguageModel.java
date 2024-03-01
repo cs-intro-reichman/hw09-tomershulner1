@@ -38,8 +38,20 @@ public class LanguageModel {
 
     // Computes and sets the probabilities (p and cp fields) of all the
 	// characters in the given list. */
-	public void calculateProbabilities(List probs) {				
-		// Your code goes here
+	public void calculateProbabilities(List probs) {	
+        int number_of_cp = 0;			
+		ListIterator li = probs.listIterator(0);
+        while(li.hasNext()) {
+            number_of_cp++;
+            li.next();
+        }
+        double cp = 0.0;
+        for(int i = 0; i < probs.getSize(); i++) {
+            CharData curr = probs.get(i);
+            curr.p = curr.count / number_of_cp;
+            curr.cp = cp + curr.p;
+            cp += curr.p;
+        }
 	}
 
     // Returns a random character from the given probabilities list.
@@ -69,6 +81,11 @@ public class LanguageModel {
 	}
 
     public static void main(String[] args) {
-		// Your code goes here
+    //     List MyList = new List();
+    //     String n = "committee_";
+    //     for(int i = 0; i < n.length(); i++) {
+    //         MyList.update(n.charAt(i));
+    //     }
+    // }
     }
 }

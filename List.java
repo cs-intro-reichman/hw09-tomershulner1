@@ -40,7 +40,7 @@ public class List {
         StringBuilder res = new StringBuilder("");
         Node curr = this.first;
         while(curr != null) {
-            res.append(curr.cp.toString() + "\n");
+            res.append(curr.cp.toString());
             curr = curr.next;
         }
         return res.toString();
