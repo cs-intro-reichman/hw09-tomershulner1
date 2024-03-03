@@ -34,7 +34,7 @@ public class LanguageModel {
     /** Builds a language model from the text in the given file (the corpus). */
 	public void train(String fileName) {
 		String window = "";
-        char c;
+        char chr;
         In in = new In(fileName);
 
         for (int i = 0; i < windowLength; i++) {
@@ -42,7 +42,7 @@ public class LanguageModel {
         }
 
         while(!in.isEmpty()) {
-            c = in.readChar();
+            chr = in.readChar();
 
             List probs = CharDataMap.get(window);
 
@@ -50,9 +50,9 @@ public class LanguageModel {
                 probs = new List();
                 CharDataMap.put(window, probs);
             }
-            probs.update(c);
+            probs.update(chr);
 
-            window += c;
+            window += chr;
             window = window.substring(1);
         }
         for (List probs : CharDataMap.values()) {
