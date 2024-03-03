@@ -115,7 +115,7 @@ public class LanguageModel {
             }
             char c = getRandomChar(probs);
             generated_text += c;
-            window = initialText.substring(generated_text.length() - this.windowLength);
+            window = generated_text.substring(generated_text.length() - this.windowLength);
             
         }
         return generated_text;
