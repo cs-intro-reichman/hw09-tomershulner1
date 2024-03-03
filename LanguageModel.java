@@ -47,7 +47,8 @@ public class LanguageModel {
             List probs = CharDataMap.get(window);
 
             if (probs == null) {
-                CharDataMap.put(window, new List());
+                probs = new List();
+                CharDataMap.put(window, probs);
             }
             probs.update(c);
 
@@ -100,7 +101,24 @@ public class LanguageModel {
 	 * @return the generated text
 	 */
 	public String generate(String initialText, int textLength) {
-		return "";
+		if(textLength < this.windowLength) {
+            return initialText;
+        } 
+
+        String window = initialText.substring(initialText.length() - this.windowLength);
+        String generated_text = window;
+
+        while(generated_text.length() < textLength + this.windowLength) {
+            List probs = CharDataMap.get(window);
+            if(probs == null) {
+                return generated_text;
+            }
+            char c = getRandomChar(probs);
+            generated_text += c;
+            window = initialText.substring(generated_text.length() - this.windowLength);
+            
+        }
+        return generated_text;
 	}
 
     /** Returns a string representing the map of this language model. */
