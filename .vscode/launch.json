@@ -1,0 +1,40 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "LanguageModel",
+            "request": "launch",
+            "mainClass": "LanguageModel",
+            "projectName": "hw09-tomershulner1_5422a62"
+        },
+        {
+            "type": "java",
+            "name": "LanguageModelTester",
+            "request": "launch",
+            "mainClass": "LanguageModelTester",
+            "projectName": "hw09-tomershulner1_5422a62"
+        },
+        {
+            "type": "java",
+            "name": "ListTester",
+            "request": "launch",
+            "mainClass": "ListTester",
+            "projectName": "hw09-tomershulner1_5422a62"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Lunch App",
+            "request": "launch",
+            "mainClass": "ListTester",
+            "args": [
+                "toString"
+            ]
+        }
+    ]
+}

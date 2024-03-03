@@ -33,18 +33,64 @@ public class LanguageModel {
 
     /** Builds a language model from the text in the given file (the corpus). */
 	public void train(String fileName) {
-		// Your code goes here
+		String window = "";
+        char chr;
+        In in = new In(fileName);
+
+        for (int i = 0; i < windowLength; i++) {
+            window += in.readChar();
+        }
+
+        while(!in.isEmpty()) {
+            chr = in.readChar();
+
+            List probs = CharDataMap.get(window);
+
+            if (probs == null) {
+                probs = new List();
+                CharDataMap.put(window, probs);
+            }
+            probs.update(chr);
+
+            window += chr;
+            window = window.substring(1);
+        }
+        for (List probs : CharDataMap.values()) {
+            calculateProbabilities(probs);
+        }
+       
 	}
 
     // Computes and sets the probabilities (p and cp fields) of all the
 	// characters in the given list. */
-	public void calculateProbabilities(List probs) {				
-		// Your code goes here
+	public void calculateProbabilities(List probs) {	
+        int total_num_of_chars = 0;			
+		ListIterator li = probs.listIterator(0);
+        while(li.hasNext()) {
+            total_num_of_chars += li.current.cp.count;
+            li.next();
+        }
+        double cp = 0.0;
+        CharData curr;
+        for(int i = 0; i < probs.getSize(); i++) {
+            curr = probs.get(i);
+            curr.p = curr.count / (double) total_num_of_chars;
+            curr.cp = cp + curr.p;
+            cp += curr.p;
+        }
 	}
 
     // Returns a random character from the given probabilities list.
 	public char getRandomChar(List probs) {
-		// Your code goes here
+        double r = randomGenerator.nextDouble();
+        CharData curr = probs.getFirst();
+        for(int i = 0; i < probs.getSize(); i++) {
+            curr = probs.get(i);
+            if(curr.cp > r) {
+                break;
+            }
+        }
+        return curr.chr;
 	}
 
     /**
@@ -55,7 +101,24 @@ public class LanguageModel {
 	 * @return the generated text
 	 */
 	public String generate(String initialText, int textLength) {
-		// Your code goes here
+		if(textLength < this.windowLength) {
+            return initialText;
+        } 
+
+        String window = initialText.substring(initialText.length() - this.windowLength);
+        String generated_text = window;
+
+        while(generated_text.length() < textLength + this.windowLength) {
+            List probs = CharDataMap.get(window);
+            if(probs == null) {
+                return generated_text;
+            }
+            char c = getRandomChar(probs);
+            generated_text += c;
+            window = generated_text.substring(generated_text.length() - this.windowLength);
+            
+        }
+        return generated_text;
 	}
 
     /** Returns a string representing the map of this language model. */
@@ -67,8 +130,4 @@ public class LanguageModel {
 		}
 		return str.toString();
 	}
-
-    public static void main(String[] args) {
-		// Your code goes here
-    }
 }
